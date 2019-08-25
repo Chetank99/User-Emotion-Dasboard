@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Emotion.AI</title>
+    
+    <style>
+        #container {
+            margin: 0px auto;
+            width: 500px;
+            height: 375px;
+            border: 10px #333 solid;
+        }
+        #videoElement {
+            width: 500px;
+            height: 375px;
+            background-color: #666;
+        }
+        html {
+        height:100%;
+        }
+
+        body {
+          margin:0;
+        }
+
+        .bg {
+          animation:slide 3s ease-in-out infinite alternate;
+          background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+          bottom:0;
+          left:-50%;
+          opacity:.5;
+          position:fixed;
+          right:-50%;
+          top:0;
+          z-index:-1;
+        }
+
+        .bg2 {
+          animation-direction:alternate-reverse;
+          animation-duration:4s;
+        }
+
+        .bg3 {
+          animation-duration:5s;
+        }
+
+        .content {
+          background-color:rgba(255,255,255,.8);
+          border-radius:.25em;
+          box-shadow:0 0 .25em rgba(0,0,0,.25);
+          box-sizing:border-box;
+          left:50%;
+          padding:10vmin;
+          position:fixed;
+          text-align:center;
+          top:50%;
+          transform:translate(-50%, -50%);
+        }
+
+        h1 {
+          font-family:monospace;
+        }
+
+        @keyframes slide {
+          0% {
+            transform:translateX(-25%);
+          }
+          100% {
+            transform:translateX(25%);
+          }
+        }
+        
+    </style>
+
+</head>
+<body>
+  
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <div class="content">
+    <div id="container">
+      <video autoplay="true" id="videoElement"></video>
+    </div>
+
+    <table border="1">
+      <tr>
+              <th>Overall kya feels</th>
+              <th>Smile karaha</th>
+              <th>Gender</th>
+              <th>Lower Age Range</th>
+              <th>Upper Age Range</th>
+              <th>Approx Mean Age</th>
+              <th>Ethnicity</th>
+              
+      </tr>
+  
+  <tr>
+          {% for value in vals %}
+          <td>{{ value }}</td>  
+          {% endfor %}
+  </tr>
+  
+
+    </table>
+
+    <a href="{{ url_for('home') }}"><button id="stop">New Customer</button></a>
+
+    <button onclick="window.location.href = '	http://127.0.0.1:5000/detailed.html';" type="button" class="btn btn-outline-dark">
+      Detailed Information About Customer
+    </button>
+  </div>
+
+
+
+
+</body>
+
+<script>
+var video = document.querySelector("#videoElement");
+if (navigator.mediaDevices.getUserMedia) {
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(function (stream) {
+video.srcObject = stream;
+})
+.catch(function (err0r) {
+console.log("Something went wrong!");
+});
+}
+
+    var video = document.querySelector("#videoElement");
+    var stopVideo = document.querySelector("#stop");
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+          console.log("Something went wrong!");
+        });
+    }
+
+    stopVideo.addEventListener("click", stop, false);
+
+    function stop(e) {
+      var stream = video.srcObject;
+      var tracks = stream.getTracks();
+
+      for (var i = 0; i < tracks.length; i++) {
+        var track = tracks[i];
+        track.stop();
+      }
+
+      video.srcObject = null;
+    }
+
+
+</script>
+
+</html>
