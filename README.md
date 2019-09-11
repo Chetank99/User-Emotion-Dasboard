@@ -1,4 +1,4 @@
-# Dashboard using computer vision to monitor customer engagement(web app)
+# Dashboard using computer vision to monitor customer emotions and range for age(web app)
 
 To run the project use the requirements.txt file given in the repo:<br />
 pip install -r requirements.txt<br />
